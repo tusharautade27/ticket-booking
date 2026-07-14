@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Environment
+.env
+.env.*
+
+# Python
+backend/venv/
+backend/__pycache__/
+backend/**/*.pyc
+backend/.pytest_cache/
+backend/.mypy_cache/
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/dist/
+
+# Editors
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Archives
+*.zip
