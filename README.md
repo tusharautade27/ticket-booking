@@ -1,6 +1,13 @@
-![Banner](screenshots/banner.png)
+
 
 # 🎟️ Ticket Booking System
+
+<p align="center">
+  <img src="banner.png" width="100%">
+</p>
+
+<p align="center">
+
 
 A modern **Full Stack Ticket Booking System** built with **FastAPI**, **Next.js**, **PostgreSQL**, and **JWT Authentication**.
 
