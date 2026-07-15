@@ -14,6 +14,8 @@ from app.database.dependencies import get_db
 from app.models.ticket import Ticket
 from app.models.user import User
 
+from app.services.ticket_service import TicketService
+
 router = APIRouter(
     prefix="/tickets",
     tags=["Tickets"],
@@ -109,3 +111,39 @@ def validate_ticket(
         "booking_id": ticket.booking_id,
         "validated_at": ticket.used_at,
     }
+
+@router.get("")
+def get_my_tickets(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    tickets = TicketService.get_user_tickets(
+        db=db,
+        user_id=current_user.id,
+    )
+
+    result = []
+
+    for ticket in tickets:
+        booking = ticket.booking
+
+        seat_numbers = [
+            f"{seat.row}{seat.seat_number}"
+            for seat in booking.seats
+        ]
+
+        result.append(
+            {
+                "id": ticket.id,
+                "ticket_number": ticket.ticket_number,
+                "booking_id": booking.id,
+                "event": booking.event.title,
+                "status": booking.status.value,
+                "seats": seat_numbers,
+                "issued_at": ticket.issued_at,
+                "pdf_available": ticket.pdf_path is not None,
+                "is_used": ticket.is_used,
+            }
+        )
+
+    return result

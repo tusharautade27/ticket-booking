@@ -9,8 +9,18 @@ export async function createBooking(
   data: CreateBookingData
 ) {
   const response = await api.post(
-    "/bookings/xyz123",
+    "/bookings/",
     data
+  );
+
+  return response.data;
+}
+
+export async function cancelBooking(
+  bookingId: number
+) {
+  const response = await api.post(
+    `/bookings/${bookingId}/cancel`
   );
 
   return response.data;

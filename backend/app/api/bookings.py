@@ -18,25 +18,16 @@ router = APIRouter(
 )
 
 
-@router.post("/xyz123", response_model=BookingResponse)
+@router.post("/", response_model=BookingResponse)
 def create(
     booking: BookingCreate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    print("=" * 60)
-    print("BOOKING ROUTE HIT")
-    print("Current User:", current_user.email)
-    print("Booking:", booking)
-    print("=" * 60)
-
-    return {
-        "id": 999,
-        "user_id": current_user.id,
-        "event_id": booking.event_id,
-        "status": "PENDING",
-        "booked_at": "2026-01-01T00:00:00",
-    }
+    try:
+        return create_booking(db, booking, current_user.id)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.get(

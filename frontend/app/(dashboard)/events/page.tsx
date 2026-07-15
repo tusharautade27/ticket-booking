@@ -1,6 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { useQuery, useMutation } from "@tanstack/react-query";
+
 import { getEvents } from "@/services/event.service";
 import { createBooking } from "@/services/booking.service";
 
@@ -10,6 +13,8 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 export default function EventsPage() {
+  const router = useRouter();
+
   const {
     data: events,
     isLoading,
@@ -27,11 +32,11 @@ export default function EventsPage() {
     },
 
     onError: (error: any) => {
-        console.error(error);
+      console.error(error);
 
-        toast.error(
-            error?.response?.data?.detail || "Booking failed"
-        );
+      toast.error(
+        error?.response?.data?.detail || "Booking failed"
+      );
     },
   });
 
@@ -45,7 +50,9 @@ export default function EventsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Events</h1>
+      <h1 className="text-3xl font-bold">
+        Events
+      </h1>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {events?.map((event) => (
@@ -74,10 +81,7 @@ export default function EventsPage() {
               <Button
                 className="w-full mt-4"
                 onClick={() =>
-                  bookingMutation.mutate({
-                    event_id: event.id,
-                    seat_ids: [1],
-                  })
+                  router.push(`/events/${event.id}/seats`)
                 }
               >
                 Book Ticket

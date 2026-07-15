@@ -22,6 +22,7 @@ def cancel(
         return cancel_booking(
             db=db,
             booking_id=booking_id,
+            user_id=current_user.id,
         )
     except ValueError as e:
         raise HTTPException(

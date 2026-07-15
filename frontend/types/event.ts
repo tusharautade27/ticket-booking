@@ -6,5 +6,4 @@ export interface Event {
   event_date: string;
   event_time: string;
   venue_id: number;
-  organizer_id: number;
 }

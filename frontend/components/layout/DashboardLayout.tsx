@@ -1,9 +1,13 @@
-import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
+"use client";
 
-type Props = {
-  children: React.ReactNode;
-};
+import { ReactNode } from "react";
+
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
+
+interface Props {
+  children: ReactNode;
+}
 
 export default function DashboardLayout({
   children,
@@ -12,10 +16,10 @@ export default function DashboardLayout({
     <div className="flex min-h-screen">
       <Sidebar />
 
-      <div className="flex flex-1 flex-col">
+      <div className="flex-1 bg-gray-100">
         <Navbar />
 
-        <main className="flex-1 p-6 bg-gray-50">
+        <main className="p-8">
           {children}
         </main>
       </div>

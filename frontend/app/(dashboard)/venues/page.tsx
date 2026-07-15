@@ -2,10 +2,15 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getVenues } from "@/services/venue.service";
+
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function VenuesPage() {
-  const { data: venues, isLoading } = useQuery({
+  const {
+    data: venues,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["venues"],
     queryFn: getVenues,
   });
@@ -14,33 +19,45 @@ export default function VenuesPage() {
     return <p>Loading venues...</p>;
   }
 
-  return (
-    <div>
-      <h1 className="text-3xl font-bold mb-6">Venues</h1>
+  if (error) {
+    return <p>Failed to load venues.</p>;
+  }
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {venues?.map((venue) => (
+  return (
+    <div className="space-y-6">
+
+      <h1 className="text-4xl font-bold">
+        Venues
+      </h1>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        {venues?.map((venue: any) => (
+
           <Card key={venue.id}>
-            <CardContent className="p-5">
-              <h2 className="text-xl font-semibold">
+
+            <CardContent className="p-6">
+
+              <h2 className="text-2xl font-bold">
                 {venue.name}
               </h2>
 
-              <p>{venue.city}</p>
-
-              <p>{venue.address}</p>
+              <p className="mt-2">
+                📍 {venue.location}
+              </p>
 
               <p className="mt-2">
-                Rows: {venue.total_rows}
+                Capacity: {venue.capacity}
               </p>
 
-              <p>
-                Columns: {venue.total_columns}
-              </p>
             </CardContent>
+
           </Card>
+
         ))}
+
       </div>
+
     </div>
   );
 }

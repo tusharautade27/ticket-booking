@@ -1,24 +1,29 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { removeToken } from "@/utils/token";
+import { useRouter } from "next/navigation";
+
 export default function Navbar() {
+  const router = useRouter();
+
+  function logout() {
+    removeToken();
+    router.push("/login");
+  }
+
   return (
-    <header className="flex h-16 items-center justify-between border-b bg-white px-6">
-      <h2 className="text-lg font-semibold">
-        Ticket Booking System
-      </h2>
+    <header className="h-16 border-b flex items-center justify-between px-6 bg-white">
+      <h1 className="text-2xl font-bold">
+        🎟 Ticket Booking System
+      </h1>
 
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white">
-          T
-        </div>
-
-        <div>
-          <p className="font-medium">Tushar</p>
-          <p className="text-xs text-gray-500">
-            User
-          </p>
-        </div>
-      </div>
+      <Button
+        variant="destructive"
+        onClick={logout}
+      >
+        Logout
+      </Button>
     </header>
   );
 }

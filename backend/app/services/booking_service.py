@@ -11,6 +11,7 @@ from app.models.booking import Booking
 from app.models.seat_hold import SeatHold
 from app.schemas.booking import BookingCreate
 
+from app.services.ticket_service import TicketService
 
 def create_booking(
     db: Session,
@@ -86,6 +87,12 @@ def create_booking(
 
     db.commit()
     db.refresh(db_booking)
+
+    # Generate ticket immediately after booking
+    TicketService.create_ticket(
+        db=db,
+        booking=db_booking,
+    )
 
     return db_booking
 

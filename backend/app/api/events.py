@@ -7,6 +7,7 @@ from app.services.event_service import (
     create_event,
     get_events,
     get_event,
+    get_event_seats,
     update_event,
     delete_event,
 )
@@ -47,6 +48,18 @@ def get_one(
     db: Session = Depends(get_db),
 ):
     return get_event(db, event_id)
+
+@router.get(
+    "/{event_id}/seats",
+)
+def get_seats(
+    event_id: int,
+    db: Session = Depends(get_db),
+):
+    return get_event_seats(
+        db,
+        event_id,
+    )
 
 
 @router.put(
